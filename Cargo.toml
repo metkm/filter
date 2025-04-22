@@ -1,0 +1,25 @@
+[package]
+name = "filter"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+wdk = "0.3.0"
+wdk-alloc = "0.3.0"
+wdk-panic = "0.3.0"
+wdk-sys = "0.3.0"
+
+[build-dependencies]
+wdk-build = "0.3.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[package.metadata.wdk.driver-model]
+driver-type = "WDM"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"

@@ -10,17 +10,24 @@ use wdk_alloc::WdkAllocator;
 #[global_allocator]
 static GLOBAL_ALLOCATOR: WdkAllocator = WdkAllocator;
 
-use wdk_sys::{
-   PDRIVER_OBJECT,
-   NTSTATUS,
-   PCUNICODE_STRING,
-};
+use wdk_sys::{DRIVER_OBJECT, NTSTATUS, PCUNICODE_STRING, PDRIVER_OBJECT, ntddk::IoDeleteDevice};
+
+unsafe extern "C" fn boost_unload(driver: *mut DRIVER_OBJECT) {
+    unsafe {
+        IoDeleteDevice((*driver).DeviceObject);
+    }
+}
 
 #[unsafe(export_name = "DriverEntry")] // WDF expects a symbol with the name DriverEntry
 pub unsafe extern "system" fn driver_entry(
-   _driver: &mut PDRIVER_OBJECT,
-   _registry_path: PCUNICODE_STRING,
+    driver: PDRIVER_OBJECT,
+    _registry_path: PCUNICODE_STRING,
 ) -> NTSTATUS {
-   wdk::println!("driver entry");
-   0
+    wdk::println!("driver entry");
+
+    unsafe {
+        (*driver).DriverUnload = Some(boost_unload);
+    }
+
+    0
 }

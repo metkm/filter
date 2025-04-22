@@ -20,14 +20,12 @@ unsafe extern "C" fn boost_unload(driver: *mut DRIVER_OBJECT) {
 
 #[unsafe(export_name = "DriverEntry")] // WDF expects a symbol with the name DriverEntry
 pub unsafe extern "system" fn driver_entry(
-    driver: PDRIVER_OBJECT,
+    driver: &PDRIVER_OBJECT,
     _registry_path: PCUNICODE_STRING,
 ) -> NTSTATUS {
     wdk::println!("driver entry");
 
-    unsafe {
-        (*driver).DriverUnload = Some(boost_unload);
-    }
+    (unsafe { *(*driver) }).DriverUnload = Some(boost_unload);
 
     0
 }

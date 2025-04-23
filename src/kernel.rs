@@ -14,7 +14,7 @@ pub struct WDF_OBJECT_ATTRIBUTES {
 
 #[repr(C)]
 #[derive(Debug)]
-pub struct WDF_DRIVER_CONFIG {
+pub struct PWDF_DRIVER_CONFIG {
     pub Size: u32,
     pub EvtDriverDeviceAdd: Option<unsafe extern "C" fn()>,
     pub EvtDriverUnload: Option<unsafe extern "C" fn()>,
@@ -29,11 +29,11 @@ unsafe extern "C" {
         DriverObject: PDRIVER_OBJECT,
         RegistryPath: PCUNICODE_STRING,
         DriverAttributes: WDF_OBJECT_ATTRIBUTES,
-        DriverConfig: WDF_DRIVER_CONFIG,
+        DriverConfig: PWDF_DRIVER_CONFIG,
     ) -> NTSTATUS;
 
     pub fn WDF_DRIVER_CONFIG_INIT(
-        Config: WDF_DRIVER_CONFIG,
+        Config: PWDF_DRIVER_CONFIG,
         EvtDriverDeviceAdd: PFN_WDF_DRIVER_DEVICE_ADD,
     ) -> NTSTATUS;
 }

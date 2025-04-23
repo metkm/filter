@@ -19,7 +19,7 @@ static GLOBAL_ALLOCATOR: WdkAllocator = WdkAllocator;
 mod kernel;
 
 use wdk_sys::{DRIVER_OBJECT, NTSTATUS, PCUNICODE_STRING, PDRIVER_OBJECT};
-use kernel::{WdfDriverInitNonPnpDriver, WDF_DRIVER_CONFIG, WDF_DRIVER_CONFIG_INIT};
+use kernel::{WdfDriverInitNonPnpDriver, PWDF_DRIVER_CONFIG, WDF_DRIVER_CONFIG_INIT};
 use wdk::println;
 
 unsafe extern "C" fn filter_unload(_driver: *mut DRIVER_OBJECT) {
@@ -41,7 +41,7 @@ pub unsafe extern "system" fn driver_entry(
         (*driver).DriverUnload = Some(filter_unload);
     }
 
-    let mut config = WDF_DRIVER_CONFIG {
+    let mut config = PWDF_DRIVER_CONFIG {
         Size: 0,
         DriverInitFlags: WdfDriverInitNonPnpDriver,
         DriverPoolTag: 0,

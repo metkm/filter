@@ -236,17 +236,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "filter"
-version = "0.1.0"
-dependencies = [
- "wdk",
- "wdk-alloc",
- "wdk-build",
- "wdk-panic",
- "wdk-sys",
-]
-
-[[package]]
 name = "glob"
 version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -785,6 +774,17 @@ dependencies = [
  "tracing-subscriber",
  "wdk-build",
  "wdk-macros",
+]
+
+[[package]]
+name = "wfp-kernel-driver"
+version = "0.1.0"
+dependencies = [
+ "wdk",
+ "wdk-alloc",
+ "wdk-build",
+ "wdk-panic",
+ "wdk-sys",
 ]
 
 [[package]]
